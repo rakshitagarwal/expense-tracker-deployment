@@ -4,8 +4,8 @@ const { v1: uuidv1 } = require("uuid");
 
 function uploadToS3(data, filename) {
   const BUCKET_NAME = "sharpener1234";
-  const IAM_USER_KEY = "AKIASQA7ETPUL7GEB6X6";
-  const IAM_USER_SECRET = "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";
+  const IAM_USER_KEY = "AKIASQA7ETPUKRKFF2WG";
+  const IAM_USER_SECRET = "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";
 
   let s3bucket = new AWS.S3({
     accessKeyId: IAM_USER_KEY,
@@ -37,14 +37,10 @@ const downloadExpenses = async (req, res) => {
 
     try{
         const expenses = await req.user.getExpenses();
-        console.log(expenses);
-        const stringifiedExpenses = JSON.stringify(expenses);
-      
+        const stringifiedExpenses = JSON.stringify(expenses);      
         const userId = req.user.id;
-      
         const filename = `Expense${userId}/${new Date()}.txt`;
         const fileURL = await uploadToS3(stringifiedExpenses, filename);
-        console.log(fileURL);
         res.status(200).json({ fileURL, success: true });
     } catch(err){
         console.log(err);

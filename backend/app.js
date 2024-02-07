@@ -20,7 +20,7 @@ const { Console } = require("console");
 // get config vars
 dotenv.config();
 
-app.use(cors());
+app.use(cors('*'));
 
 // app.use(bodyParser.urlencoded());  ////this is for handling forms
 app.use(express.json()); //this is for handling jsons
@@ -48,7 +48,9 @@ Forgotpassword.belongsTo(User);
 sequelize
   .sync()
   .then(() => {
-    app.listen(3000);
+    app.listen(3000, ()=>{
+      console.log("server running on port 3000");
+    });
   })
   .catch((err) => {
     console.log(err);
